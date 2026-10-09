@@ -40,6 +40,7 @@ h2{font-size:14px;font-family:var(--font-mono);font-weight:500;letter-spacing:.0
 .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .card{display:flex;flex-direction:column;gap:6px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;text-decoration:none;transition:border-color .15s,transform .15s}
 a.card:hover{border-color:var(--amber);transform:translateY(-2px)}
+.card.wide{grid-column:1/-1}
 .card.primary{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
 .card.primary .k,.card.primary p{color:#C9D4EA}
 .card.soon{opacity:.62;border-style:dashed}
@@ -84,7 +85,7 @@ footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);paddin
   <section aria-labelledby="see">
     <h2 id="see">See it</h2>
     <div class="links" id="links">
-      <a class="card primary" id="c-video" href="#" target="_blank" rel="noopener">
+      <a class="card primary wide" id="c-video" href="https://youtu.be/c9FJUlNSC-s" target="_blank" rel="noopener">
         <span class="k">Start here · English + Hindi</span>
         <h3>Demo video</h3>
         <p>A walk through the app, the sheet, the scripts, the emails and the dashboard.</p>
@@ -96,10 +97,10 @@ footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);paddin
         <p>Pipeline, win rate, billed against outstanding, overdue bills and pending approvals.</p>
         <span class="go">Open dashboard →</span>
       </a>
-      <a class="card" id="c-slides" href="#" target="_blank" rel="noopener">
-        <span class="k">PDF</span>
+      <a class="card" id="c-slides" href="https://drive.google.com/file/d/1DhqynwTwNfEEdO5LGU0NW6n5u8WVkT1N/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="k">Slides · Google Drive</span>
         <h3>Presentation</h3>
-        <p>The problem, the architecture, the workflow and the limits, in twelve slides.</p>
+        <p>The problem, the architecture, the workflow, the roles and the limits.</p>
         <span class="go">Open slides →</span>
       </a>
       <div class="card" id="c-app">
@@ -111,6 +112,12 @@ footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);paddin
           <a href="https://www.appsheet.com/newshortcut/a380d26a-88f7-4706-8691-24ad619052b4" target="_blank" rel="noopener">Add to phone →</a>
         </div>
       </div>
+      <a class="card" id="c-sheet" href="https://docs.google.com/spreadsheets/d/1jAWjo3xGRLOamHEjPUuSim1klsO0G3oPK9r7yaEJZqY/edit?usp=sharing" target="_blank" rel="noopener">
+        <span class="k">Google Sheet · the database</span>
+        <h3>The data</h3>
+        <p>All 28 tabs: tenders, BOQ, progress, bills, receipts, report tabs and logs.</p>
+        <span class="go">Open sheet →</span>
+      </a>
     </div>
     <p class="note">The app asks for a Google sign-in, and only people listed in its Employees table can use it. If you are not on the list, the video and the dashboard show everything it does.</p>
   </section>
@@ -164,23 +171,5 @@ footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);paddin
 
   <footer>Built as a portfolio project for an MIS and business systems role.</footer>
 </div>
-
-<script>
-/* Paste links here when they exist. An empty string shows the card as "coming soon". */
-var LINKS = { video: "", slides: "" };
-(function(){
-  function wire(id, url){
-    var el = document.getElementById(id);
-    if(!el) return;
-    if(url){ el.setAttribute("href", url); return; }
-    el.removeAttribute("href"); el.removeAttribute("target");
-    el.classList.add("soon");
-    var go = el.querySelector(".go");
-    if(go) go.textContent = "Coming soon";
-  }
-  wire("c-video", LINKS.video);
-  wire("c-slides", LINKS.slides);
-})();
-</script>
 
 </body></html>
