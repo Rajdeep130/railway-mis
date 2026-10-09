@@ -1,0 +1,186 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Railway Projects MIS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow column. Title, four link cards, the tender-to-receipt chain, facts, limits. Rail-timetable feel: mono labels, amber signal accent. */
+:root{
+  --bg:#F3F5F9;
+  --surface:#FFFFFF;
+  --ink:#16243D;
+  --muted:#52607A;
+  --line:#D6DCE8;
+  --navy:#1F3864;
+  --navy-ink:#F4F6FA;
+  --amber:#C47F10;
+  --amber-bg:#FBEFD6;
+  --font-body:'DM Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --font-mono:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1726;--surface:#17233A;--ink:#E7ECF6;--muted:#9AA8C2;--line:#2A3955;
+    --navy:#243B66;--navy-ink:#F4F6FA;--amber:#E8A33D;--amber-bg:#3A2D14;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1726;--surface:#17233A;--ink:#E7ECF6;--muted:#9AA8C2;--line:#2A3955;
+  --navy:#243B66;--navy-ink:#F4F6FA;--amber:#E8A33D;--amber-bg:#3A2D14;color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;padding-inline:20px;padding-block:0}
+.wrap{max-width:880px;margin-inline:auto;display:flex;flex-direction:column;gap:56px;padding-block:56px 64px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+.eyebrow{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin:0}
+h1{font-size:clamp(36px,7vw,60px);line-height:1.04;margin:10px 0 0;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.lede{font-size:clamp(18px,2.6vw,21px);color:var(--muted);max-width:60ch;margin:18px 0 0}
+h2{font-size:14px;font-family:var(--font-mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 16px}
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{display:flex;flex-direction:column;gap:6px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;text-decoration:none;transition:border-color .15s,transform .15s}
+a.card:hover{border-color:var(--amber);transform:translateY(-2px)}
+.card.primary{background:var(--navy);border-color:var(--navy);color:var(--navy-ink)}
+.card.primary .k,.card.primary p{color:#C9D4EA}
+.card.soon{opacity:.62;border-style:dashed}
+.k{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card h3{margin:0;font-size:20px;line-height:1.25}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.go{margin-top:auto;padding-top:10px;font-weight:700;font-size:15px;color:var(--amber)}
+.card.primary .go{color:#F2BD66}
+.alt{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;font-size:14px}
+.alt a{color:var(--amber);font-weight:700}
+.card.primary .alt a{color:#F2BD66}
+.note{background:var(--amber-bg);border-radius:12px;padding:14px 18px;font-size:15px;color:var(--ink);margin-top:14px}
+.chain{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:center;margin:0;padding:0;list-style:none}
+.chain li{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:14px}
+.chain span{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+.chain li:not(:last-child)::after{content:"";width:18px;height:2px;background:var(--amber)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.facts li{border-top:3px solid var(--navy);padding-top:10px}
+.facts b{display:block;font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.facts span{font-size:14px;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.cols p{margin:0 0 10px;color:var(--muted);max-width:60ch}
+.cols p b{color:var(--ink)}
+.limits{border-left:3px solid var(--amber);padding-left:18px;max-width:64ch}
+.limits p{margin:0 0 8px;color:var(--muted)}
+footer{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}
+@media (max-width:640px){
+  .links,.cols{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wrap{gap:44px;padding-block:40px 48px}
+}
+@media (prefers-reduced-motion:reduce){.card{transition:none}a.card:hover{transform:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Portfolio project · Demo data</p>
+    <h1>Railway Projects MIS</h1>
+    <p class="lede">One system that follows a railway contract from tender to payment. Built on Google Sheets, AppSheet, Apps Script and Looker Studio.</p>
+  </header>
+
+  <section aria-labelledby="see">
+    <h2 id="see">See it</h2>
+    <div class="links" id="links">
+      <a class="card primary" id="c-video" href="#" target="_blank" rel="noopener">
+        <span class="k">Start here · English + Hindi</span>
+        <h3>Demo video</h3>
+        <p>A walk through the app, the sheet, the scripts, the emails and the dashboard.</p>
+        <span class="go">Watch on YouTube →</span>
+      </a>
+      <a class="card" id="c-dash" href="https://datastudio.google.com/reporting/c3b3a5f9-31ac-4ab6-9aba-e20ca08ce764" target="_blank" rel="noopener">
+        <span class="k">Live · view only</span>
+        <h3>Management dashboard</h3>
+        <p>Pipeline, win rate, billed against outstanding, overdue bills and pending approvals.</p>
+        <span class="go">Open dashboard →</span>
+      </a>
+      <a class="card" id="c-slides" href="#" target="_blank" rel="noopener">
+        <span class="k">PDF</span>
+        <h3>Presentation</h3>
+        <p>The problem, the architecture, the workflow and the limits, in twelve slides.</p>
+        <span class="go">Open slides →</span>
+      </a>
+      <div class="card" id="c-app">
+        <span class="k">AppSheet · invited users only</span>
+        <h3>The app</h3>
+        <p>Role-based screens for tenders, projects, progress and bills.</p>
+        <div class="alt">
+          <a href="https://www.appsheet.com/start/a380d26a-88f7-4706-8691-24ad619052b4" target="_blank" rel="noopener">Open in browser →</a>
+          <a href="https://www.appsheet.com/newshortcut/a380d26a-88f7-4706-8691-24ad619052b4" target="_blank" rel="noopener">Add to phone →</a>
+        </div>
+      </div>
+    </div>
+    <p class="note">The app asks for a Google sign-in, and only people listed in its Employees table can use it. If you are not on the list, the video and the dashboard show everything it does.</p>
+  </section>
+
+  <section aria-labelledby="chain">
+    <h2 id="chain">One chain of records</h2>
+    <ol class="chain">
+      <li><span>Tender</span></li>
+      <li><span>Contract</span></li>
+      <li><span>Project</span></li>
+      <li><span>Site</span></li>
+      <li><span>BOQ item</span></li>
+      <li><span>Progress</span></li>
+      <li><span>Bill</span></li>
+      <li><span>Receipt</span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="nums">
+    <h2 id="nums">In numbers</h2>
+    <ul class="facts">
+      <li><b>28</b><span>tabs in the sheet</span></li>
+      <li><b>7</b><span>roles, each with their own screens</span></li>
+      <li><b>4</b><span>scheduled scripts</span></li>
+      <li><b>15 min</b><span>dashboard refresh</span></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="how">
+    <h2 id="how">How it works</h2>
+    <div class="cols">
+      <div>
+        <p><b>Roles.</b> A site engineer enters daily progress. The project manager approves it. The billing executive bills only approved work. Nobody approves their own entry.</p>
+        <p><b>Emails.</b> Tender reminders go out 7, 3, 1 and 0 days before the due date, and every day once overdue. A log stops any email being sent twice.</p>
+      </div>
+      <div>
+        <p><b>Numbers.</b> Progress % is executed quantity over planned quantity from the BOQ. Net payable is the certified amount less deductions. A bill is overdue when it is unpaid more than 30 days after certification.</p>
+        <p><b>Dashboard.</b> Apps Script recalculates report tabs every 15 minutes, and Looker Studio reads them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="lim">
+    <h2 id="lim">What it is not</h2>
+    <div class="limits">
+      <p>All data is demo data, and everything runs on free plans.</p>
+      <p>It is not production-hardened. The audit trail is the log tabs only, and roles rely on the app sign-in.</p>
+      <p>I built it with AI assistance, and I can explain every formula, script and design choice.</p>
+    </div>
+  </section>
+
+  <footer>Built as a portfolio project for an MIS and business systems role.</footer>
+</div>
+
+<script>
+/* Paste links here when they exist. An empty string shows the card as "coming soon". */
+var LINKS = { video: "", slides: "" };
+(function(){
+  function wire(id, url){
+    var el = document.getElementById(id);
+    if(!el) return;
+    if(url){ el.setAttribute("href", url); return; }
+    el.removeAttribute("href"); el.removeAttribute("target");
+    el.classList.add("soon");
+    var go = el.querySelector(".go");
+    if(go) go.textContent = "Coming soon";
+  }
+  wire("c-video", LINKS.video);
+  wire("c-slides", LINKS.slides);
+})();
+</script>
+
+</body></html>
